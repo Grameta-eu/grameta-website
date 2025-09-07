@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,9 +10,9 @@
     --background: 0 0% 100%; /* #FFFFFF */
     --foreground: 0 0% 10%; /* #1A1A1A */
 
-    /* Brand accent - Light blue #92E0FF */
-    --accent-primary: 192 100% 79%; /* #92E0FF */
-    --accent-hover: 192 100% 73%; /* #7AC9E8 */
+    /* Brand accent - Blue #016DFE */
+    --accent-primary: 214 99% 50%; /* #016DFE */
+    --accent-hover: 214 95% 45%; /* darker hover */
     
     /* Text colors */
     --text-primary: 0 0% 10%; /* #1A1A1A */
@@ -25,14 +23,14 @@
     --background-subtle: 0 0% 98%; /* #F9F9F9 */
     
     /* Semantic colors */
-    --primary: 0 0% 10%;
+    --primary: 214 99% 50%; /* match accent #016DFE */
     --primary-foreground: 0 0% 100%;
     
     --secondary: 0 0% 98%;
     --secondary-foreground: 0 0% 10%;
     
-    --accent: 192 100% 79%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 214 99% 50%;
+    --accent-foreground: 0 0% 100%;
     
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 33%;
@@ -45,7 +43,7 @@
     
     --border: 0 0% 93%;
     --input: 0 0% 93%;
-    --ring: 192 100% 79%;
+    --ring: 214 99% 50%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -63,12 +61,12 @@
   .dark {
     --background: 0 0% 4%;
     --foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 4%;
+    --primary: 214 99% 50%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 98%;
-    --accent: 192 100% 79%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 214 99% 50%;
+    --accent-foreground: 0 0% 100%;
     --muted: 0 0% 8%;
     --muted-foreground: 0 0% 65%;
     --card: 0 0% 4%;
@@ -77,7 +75,7 @@
     --popover-foreground: 0 0% 98%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 192 100% 79%;
+    --ring: 214 99% 50%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
   }
@@ -89,8 +87,9 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-background text-foreground font-segoe;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
   }
   
   html {
@@ -130,7 +129,7 @@
   /* Container and Layout */
   .container-custom {
     @apply mx-auto px-4 sm:px-6 lg:px-8;
-    max-width: 1200px;
+    max-width: 1180px;
   }
   
   .section-padding {
@@ -161,6 +160,14 @@
     box-shadow: var(--shadow-hover);
     transform: translateY(-2px);
   }
+
+  /* Variant: card with accent-colored shadow (same size as default) */
+  .card-elegant-accent {
+    box-shadow: 0 8px 24px hsl(var(--accent) / 0.06);
+  }
+  .card-elegant-accent:hover {
+    box-shadow: 0 12px 32px hsl(var(--accent) / 0.12);
+  }
   
   .image-gallery {
     @apply rounded-lg overflow-hidden;
@@ -172,6 +179,36 @@
     transform: scale(1.02);
     box-shadow: var(--shadow-hover);
   }
+
+  /* Variant: image with accent-colored shadow */
+  .image-gallery-accent {
+    box-shadow: 0 20px 60px hsl(var(--accent) / 0.35);
+  }
+  .image-gallery-accent:hover {
+    box-shadow: 0 28px 80px hsl(var(--accent) / 0.45);
+  }
+
+  /* Variant: image without shadow (used in Home portfolio carousel) */
+  .image-gallery-flat {
+    box-shadow: none !important;
+  }
+  .image-gallery-flat:hover {
+    box-shadow: none !important;
+  }
+  
+  /* Image card for About: soft shadow + subtle inner brand border */
+  .image-card-soft {
+    position: relative;
+    box-shadow: 0 24px 24px rgba(0,0,0,0.12);
+  }
+  .image-card-soft::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 2px #E6F0FF; /* brand-tinted inner border */
+    border-radius: inherit;
+  }
   
   /* Accent Elements */
   .accent-line {
@@ -180,5 +217,14 @@
   
   .icon-accent {
     @apply bg-accent text-accent-foreground rounded-full p-3;
+  }
+
+  /* Utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

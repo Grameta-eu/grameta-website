@@ -1,149 +1,56 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import Layout from '@/components/layout/Layout';
-
-// Import product images
-import aluminumHousing from '@/assets/products/aluminum-housing-m12.jpg';
-import precisionShaft from '@/assets/products/precision-shaft-16.jpg';
-import electronicsBracket from '@/assets/products/electronics-bracket.jpg';
-import bronzeBushing from '@/assets/products/bronze-bushing.jpg';
-import steelFlange from '@/assets/products/steel-flange-pn16.jpg';
-import medicalFastener from '@/assets/products/medical-fastener.jpg';
-import pomSpacer from '@/assets/products/pom-spacer.jpg';
-import anodizedCover from '@/assets/products/anodized-cover.jpg';
-import stainlessPin from '@/assets/products/stainless-pin.jpg';
+import { products as allProducts, categories as allCategories } from '@/data/products';
 
 const Products = () => {
   const [activeFilter, setActiveFilter] = useState('Visi');
 
-  const categories = ['Visi', 'Mašinų pramonė', 'Medicina', 'Statybos', 'Elektronika'];
+  const categories = allCategories;
+  const products = allProducts;
 
-  const products = [
-    {
-      id: 1,
-      name: 'Frez. aliuminio korpusas M12',
-      category: 'Mašinų pramonė',
-      image: aluminumHousing,
-      alt: 'Frezavimo būdu pagamintas aliuminio korpusas M12 sriegiais'
-    },
-    {
-      id: 2,
-      name: 'Tikslioji ašis Ø16',
-      category: 'Mašinų pramonė',
-      image: precisionShaft,
-      alt: 'Tikslioji tekinimo būdu pagaminta ašis skersmens Ø16'
-    },
-    {
-      id: 3,
-      name: 'Laikiklis elektronikos moduliui',
-      category: 'Elektronika',
-      image: electronicsBracket,
-      alt: 'CNC apdirbtas laikiklis elektronikos moduliui'
-    },
-    {
-      id: 4,
-      name: 'Bronzos įvorė su grioveliu',
-      category: 'Mašinų pramonė',
-      image: bronzeBushing,
-      alt: 'Bronzinė įvorė su tepimo grioveliu'
-    },
-    {
-      id: 5,
-      name: 'Plieno flanšas PN16',
-      category: 'Statybos',
-      image: steelFlange,
-      alt: 'Plieninis flanšas PN16 su tvirtinimo skylėmis'
-    },
-    {
-      id: 6,
-      name: 'Medicininė tvirtinimo detalė',
-      category: 'Medicina',
-      image: medicalFastener,
-      alt: 'Smulki medicininė detalė su precizišku paviršiumi'
-    },
-    {
-      id: 7,
-      name: 'Plastiko tarpiklis POM',
-      category: 'Elektronika',
-      image: pomSpacer,
-      alt: 'POM plastiko tarpiklis elektronikos įrenginiui'
-    },
-    {
-      id: 8,
-      name: 'Aliuminio dangtelis anod.',
-      category: 'Elektronika',
-      image: anodizedCover,
-      alt: 'Anoduotas aliuminio dangtelis su švariais briaunų užapvalinimais'
-    },
-    {
-      id: 9,
-      name: 'Nerūd. plieno kaištis',
-      category: 'Mašinų pramonė',
-      image: stainlessPin,
-      alt: 'Nerūdijančio plieno kaištis su fazuotomis briaunomis'
-    }
-  ];
-
-  const filteredProducts = activeFilter === 'Visi' 
-    ? products 
+  const filteredProducts = activeFilter === 'Visi'
+    ? products
     : products.filter(product => product.category === activeFilter);
 
-  const getCategoryColor = (category: string) => {
-    const colors = {
-      'Mašinų pramonė': 'bg-blue-100 text-blue-800',
-      'Medicina': 'bg-green-100 text-green-800',
-      'Statybos': 'bg-orange-100 text-orange-800',
-      'Elektronika': 'bg-purple-100 text-purple-800'
-    };
-    return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
-  };
+
+  
 
   return (
     <Layout>
       <section className="section-padding">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-h1 mb-6">Mūsų produktai</h1>
-            <p className="text-body text-text-secondary">
-              Aukštos kokybės gaminiai iš skirtingų pramonės sričių. 
-              Filtruokite pagal kategoriją ir peržiūrėkite detalių pavyzdžius.
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="text-sm font-semibold uppercase tracking-wide text-[#016dfe] mb-3">Aukštos kokybės gaminiai</div>
+            <h1 className="text-h1 tracking-tight mb-4">Mūsų produktai</h1>
+            <p className="text-body text-text-secondary max-w-[720px] mx-auto">
+              Aukštos kokybės gaminiai iš skirtingų pramonės sričių. Filtruokite pagal kategoriją ir peržiūrėkite detalių pavyzdžius.
             </p>
           </div>
 
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                onClick={() => setActiveFilter(category)}
-                variant={activeFilter === category ? "default" : "outline"}
-                className={activeFilter === category ? "btn-primary" : "btn-secondary"}
-              >
-                {category}
-              </Button>
-            ))}
+          {/* Filter Segmented Control */}
+          <div className="mt-12 flex flex-col items-center mb-12">
+
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
             {filteredProducts.map((product) => (
-              <div key={product.id} className="group cursor-pointer">
-                <div className="image-gallery mb-4">
-                  <img
-                    src={product.image}
-                    alt={product.alt}
-                    className="w-full h-64 object-cover"
-                  />
+              <div
+                key={product.id}
+                className="bg-white border border-[#E6EAF0] rounded-2xl p-4 transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+              >
+                <div className="relative mb-4">
+                  <div className="h-[180px] w-full flex items-center justify-center">
+                    <img
+                      src={product.image}
+                      alt={product.alt}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-foreground">
-                    {product.name}
-                  </h3>
-                  <Badge className={getCategoryColor(product.category)}>
-                    {product.category}
-                  </Badge>
-                </div>
+                <h3 className="text-[16px] font-semibold text-[#1A1A1A] text-center line-clamp-2">
+                  {product.name}
+                </h3>
               </div>
             ))}
           </div>
@@ -157,6 +64,7 @@ const Products = () => {
           )}
         </div>
       </section>
+
     </Layout>
   );
 };

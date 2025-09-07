@@ -1,17 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import LanguageSelector from '@/components/LanguageSelector';
 
-const Header = () => {
+interface HeaderProps {
+  overlay?: boolean;
+}
+
+const Header = ({ overlay = false }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navigation = [
     { name: 'Pagrindinis', href: '/' },
     { name: 'Apie mus', href: '/apie' },
     { name: 'Paslaugos', href: '/paslaugos' },
     { name: 'Mūsų produktai', href: '/produktai' },
+    { name: 'Pajėgumai', href: '/pajegumai' },
     { name: 'Kontaktai', href: '/kontaktai' },
   ];
 
@@ -19,48 +34,53 @@ const Header = () => {
     return location.pathname === href;
   };
 
+  const isTransparent = false;
+
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border-subtle">
+    <header
+      className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-out top-0 translate-y-0 opacity-100 bg-white ${isScrolled ? 'border-b border-border-subtle' : ''}`}
+    >
       <div className="container-custom">
-        <div className="flex items-center justify-between h-18">
+        <div className="relative flex items-center justify-between lg:justify-end h-[5.0625rem] md:h-[6.75rem]">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-accent rounded flex items-center justify-center">
-              <span className="text-accent-foreground font-bold text-lg">G</span>
-            </div>
-            <span className="font-bold text-xl text-foreground">Grameta</span>
+          <Link to="/" className="flex items-center lg:hidden">
+            <img
+              src="/grameta.webp"
+              alt="Grameta"
+              className="h-[5.0625rem] md:h-[6.75rem] w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`relative text-sm font-medium transition-colors hover:text-accent ${
+                className={`relative text-base font-medium transition-colors whitespace-nowrap ${
                   isActive(item.href)
                     ? 'text-accent'
-                    : 'text-foreground'
+                    : 'text-foreground hover:text-accent'
                 }`}
               >
                 {item.name}
                 {isActive(item.href) && (
-                  <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-accent rounded-full" />
+                  <div
+                    className={`absolute -bottom-2 left-0 right-0 h-0.5 rounded-full bg-accent`}
+                  />
                 )}
               </Link>
             ))}
           </nav>
 
-          {/* CTA Button */}
+          {/* Language Selector (Desktop) */}
           <div className="hidden lg:flex">
-            <Button asChild className="btn-primary">
-              <Link to="/kontaktai">Gauti pasiūlymą</Link>
-            </Button>
+            <LanguageSelector />
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2"
+            className={`lg:hidden p-2`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
@@ -79,7 +99,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`block py-2 px-4 rounded-md transition-colors ${
+                  className={`block py-2 px-4 rounded-md transition-colors whitespace-nowrap ${
                     isActive(item.href)
                       ? 'text-accent bg-accent/10'
                       : 'text-foreground hover:text-accent hover:bg-accent/5'
@@ -90,11 +110,7 @@ const Header = () => {
                 </Link>
               ))}
               <div className="pt-4">
-                <Button asChild className="btn-primary w-full">
-                  <Link to="/kontaktai" onClick={() => setIsMenuOpen(false)}>
-                    Gauti pasiūlymą
-                  </Link>
-                </Button>
+                <LanguageSelector isMobileMenu />
               </div>
             </nav>
           </div>

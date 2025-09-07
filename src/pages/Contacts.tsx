@@ -1,128 +1,102 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 
 const Contacts = () => {
   return (
-    <Layout>
+    <Layout showCTA={false}>
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-h1 mb-6">Kontaktai</h1>
-            <p className="text-body text-text-secondary">
+            <p className="text-sm font-semibold uppercase tracking-wide text-[#016dfe] mb-3">Susisiekite su mumis</p>
+            <h1 className="text-h1 tracking-tight mb-4">Kontaktai</h1>
+            <p className="text-body text-text-secondary max-w-[720px] mx-auto">
               Atsiųskite brėžinius arba aprašykite poreikį — parengsime pasiūlymą.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-stretch">
             {/* Contact Information */}
-            <div className="space-y-6">
-              <Card className="card-elegant">
+            <div className="space-y-6 h-full">
+              <Card className="bg-white border border-[#E6EAF0] rounded-2xl h-full overflow-hidden">
                 <CardHeader>
                   <CardTitle className="text-h3">UAB „Grameta"</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="flex items-center space-x-4">
-                    <Mail className="h-5 w-5 text-accent" />
-                    <div>
-                      <p className="font-medium">El. paštas</p>
-                      <a 
-                        href="mailto:info@grameta.lt" 
-                        className="text-accent hover:text-accent-hover transition-colors"
+                <CardContent className="h-full flex flex-col space-y-8 p-6 md:p-8">
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 rounded-full bg-[#E6F0FF] flex items-center justify-center">
+                      <Mail className="h-5 w-5 text-[#016dfe]" />
+                    </div>
+                    <div className="leading-relaxed">
+                      <p className="font-semibold">El. paštas</p>
+                      <a
+                        href="mailto:cnctekinimas@gmail.com"
+                        className="text-accent hover:text-accent-hover transition-colors font-medium"
                       >
-                        info@grameta.lt
+                        cnctekinimas@gmail.com
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4">
-                    <Phone className="h-5 w-5 text-accent" />
-                    <div>
-                      <p className="font-medium">Telefonas</p>
-                      <a 
-                        href="tel:+37000000000" 
-                        className="text-accent hover:text-accent-hover transition-colors"
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 rounded-full bg-[#E6F0FF] flex items-center justify-center">
+                      <Phone className="h-5 w-5 text-[#016dfe]" />
+                    </div>
+                    <div className="leading-relaxed">
+                      <p className="font-semibold">Telefonas</p>
+                      <a
+                        href="tel:+37065778272"
+                        className="text-accent hover:text-accent-hover transition-colors font-medium"
                       >
-                        +370 000 00000
+                        +370 (657) 78 272
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
-                    <MapPin className="h-5 w-5 text-accent mt-1" />
-                    <div>
-                      <p className="font-medium">Adresas</p>
+                  <div className="flex items-start gap-4">
+                    <div className="h-10 w-10 rounded-full bg-[#E6F0FF] flex items-center justify-center mt-1">
+                      <MapPin className="h-5 w-5 text-[#016dfe]" />
+                    </div>
+                    <div className="leading-relaxed">
+                      <p className="font-semibold">Adresas</p>
                       <p className="text-text-secondary">
-                        Gamybos g. 1<br />
-                        LT-00000, Lietuva
+                        Vandžiogalos pl. 106G<br />
+                        Domeikava, 54358 Kauno r. sav.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
-                    <Clock className="h-5 w-5 text-accent mt-1" />
-                    <div>
-                      <p className="font-medium">Darbo laikas</p>
-                      <p className="text-text-secondary">
-                        I–V 8:00–17:00
-                      </p>
+                  <div className="flex items-start gap-4 mt-auto">
+                    <div className="h-10 w-10 rounded-full bg-[#E6F0FF] flex items-center justify-center mt-1">
+                      <Clock className="h-5 w-5 text-[#016dfe]" />
+                    </div>
+                    <div className="leading-relaxed">
+                      <p className="font-semibold">Darbo laikas</p>
+                      <p className="text-text-secondary">I–V 8:00–17:00</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Contact Form */}
-            <Card className="card-elegant">
+            {/* Google Maps */}
+            <Card className="bg-white border border-[#E6EAF0] rounded-2xl h-full flex flex-col overflow-hidden shadow-[0_10px_20px_rgba(0,0,0,0.06)]">
               <CardHeader>
-                <CardTitle className="text-h3">Užklausos forma</CardTitle>
+                <CardTitle className="text-lg md:text-xl font-semibold">Mūsų lokacija</CardTitle>
               </CardHeader>
-              <CardContent>
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Vardas</Label>
-                      <Input id="name" placeholder="Jūsų vardas" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="company">Įmonė</Label>
-                      <Input id="company" placeholder="Įmonės pavadinimas" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">El. paštas</Label>
-                      <Input id="email" type="email" placeholder="jusu@email.lt" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Telefonas</Label>
-                      <Input id="phone" type="tel" placeholder="+370 000 00000" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Tema</Label>
-                    <Input id="subject" placeholder="Užklausos tema" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Žinutė</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Aprašykite savo poreikius, pridėkite brėžinius..."
-                      rows={6}
-                    />
-                  </div>
-
-                  <Button type="submit" className="btn-primary w-full">
-                    Siųsti užklausą
-                  </Button>
-                </form>
+              <CardContent className="h-full flex-1">
+                <div className="w-full h-[260px] md:h-[320px] lg:h-[350px] overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps?q=Grameta%20Vandžiogalos%20pl.%20106G,%20Domeikava,%2054358%20Kauno%20r.%20sav.&z=16&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="UAB Grameta lokacija"
+                  />
+                </div>
               </CardContent>
             </Card>
           </div>

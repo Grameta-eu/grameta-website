@@ -51,18 +51,18 @@ const Footer = () => {
             <h3 className="font-semibold text-lg">Kontaktai</h3>
             <div className="space-y-3">
               <a 
-                href="mailto:info@grameta.lt" 
+                href="mailto:cnctekinimas@gmail.com" 
                 className="flex items-center space-x-3 text-sm hover:text-accent-foreground/80 transition-colors"
               >
                 <Mail className="h-4 w-4" />
-                <span>info@grameta.lt</span>
+                <span>cnctekinimas@gmail.com</span>
               </a>
               <a 
-                href="tel:+37000000000" 
+                href="tel:+37065778272" 
                 className="flex items-center space-x-3 text-sm hover:text-accent-foreground/80 transition-colors"
               >
                 <Phone className="h-4 w-4" />
-                <span>+370 000 00000</span>
+                <span>+370 (657) 78 272</span>
               </a>
               <div className="flex items-start space-x-3 text-sm">
                 <MapPin className="h-4 w-4 mt-0.5" />

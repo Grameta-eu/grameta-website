@@ -20,6 +20,7 @@ export default {
 		extend: {
 			fontFamily: {
 				inter: ['Inter', 'sans-serif'],
+				segoe: ['"Segoe UI"', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -66,10 +67,11 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
-			spacing: {
-				'15': '3.75rem',
-				'18': '4.5rem'
-			},
+				spacing: {
+					'15': '3.75rem',
+					'18': '4.5rem',
+					'22': '5.5rem'
+				},
 			keyframes: {
 				'accordion-down': {
 					from: {
