@@ -1,15 +1,62 @@
+import { useLocation } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
+import SEO from '@/components/SEO';
 
 const Pajegumai = () => {
+  const location = useLocation();
+  
+  // Detect current language from path
+  const getCurrentLanguage = () => {
+    if (location.pathname.startsWith('/en')) return 'en';
+    return 'lt';
+  };
+
+  const currentLang = getCurrentLanguage();
+
+  // Language-specific content
+  const content = {
+    lt: {
+      badge: "Mūsų pajėgumai",
+      title: "Galimybės",
+      subtitle: "Čia rasite informaciją apie mūsų technologinius pajėgumus, įrangą ir procesus."
+    },
+    en: {
+      badge: "Our capabilities",
+      title: "Capabilities",
+      subtitle: "Here you can find information about our technological capacity, equipment, and processes."
+    }
+  };
+
+  // SEO content for capabilities page
+  const seoContent = {
+    lt: {
+      title: 'Pajėgumai - Grameta | Mūsų technologinės galimybės ir įranga',
+      description: 'Susipažinkite su UAB Grameta technologiniais pajėgumais, įranga ir procesais. CNC staklės, apdirbimo galimybės ir techniniai sprendimai.',
+      keywords: 'CNC pajėgumai, technologinės galimybės, įranga, apdirbimo procesai, CNC staklės, Grameta galimybės'
+    },
+    en: {
+      title: 'Capabilities - Grameta | Our Technological Capacity and Equipment',
+      description: 'Learn about UAB Grameta technological capabilities, equipment and processes. CNC machines, machining capabilities and technical solutions.',
+      keywords: 'CNC capabilities, technological capacity, equipment, machining processes, CNC machines, Grameta capabilities'
+    }
+  };
+
   return (
-    <Layout>
+    <>
+      <SEO 
+        title={seoContent[currentLang].title}
+        description={seoContent[currentLang].description}
+        keywords={seoContent[currentLang].keywords}
+        image="/placeholder.svg"
+      />
+      <Layout>
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-sm font-semibold uppercase tracking-wide text-[#016dfe] mb-3">Mūsų pajėgumai</div>
-            <h1 className="text-h1 tracking-tight mb-4">Galimybės</h1>
+            <div className="text-sm font-semibold uppercase tracking-wide text-[#016dfe] mb-3">{content[currentLang].badge}</div>
+            <h1 className="text-h1 tracking-tight mb-4">{content[currentLang].title}</h1>
             <p className="text-body text-text-secondary max-w-[720px] mx-auto">
-              Čia rasite informaciją apie mūsų technologinius pajėgumus, įrangą ir procesus.
+              {content[currentLang].subtitle}
             </p>
           </div>
 
@@ -47,7 +94,8 @@ const Pajegumai = () => {
           </div>
         </div>
       </section>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

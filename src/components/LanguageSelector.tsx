@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { Globe, ChevronDown } from "lucide-react";
 
 type Language = {
   code: string;
   name: string;
-  flag: string;
+  displayName: string;
 };
 
 const languages: Language[] = [
-  { code: "lt", name: "LT", flag: "🇱🇹" },
-  { code: "en", name: "EN", flag: "🇬🇧" },
+  { code: "lt", name: "LT", displayName: "Lietuvių" },
+  { code: "en", name: "EN", displayName: "English" },
 ];
 
-export default function LanguageSelector({ isMobileMenu = false }: { isMobileMenu?: boolean }) {
+export default function LanguageSelector({ isMobileMenu = false, isTransparent = false }: { isMobileMenu?: boolean; isTransparent?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState<Language>(languages[0]);
   const location = useLocation();
+  const navigate = useNavigate();
 
+  // Determine current language based on path
   useEffect(() => {
     if (location.pathname.startsWith("/en")) {
       setCurrentLanguage(languages[1]);
@@ -28,89 +29,121 @@ export default function LanguageSelector({ isMobileMenu = false }: { isMobileMen
     }
   }, [location.pathname]);
 
-  const toggleDropdown = () => setIsOpen((prev) => !prev);
+  // Toggle dropdown
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = () => {
       if (isOpen) setIsOpen(false);
     };
+
     document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, [isOpen]);
 
+  // Get equivalent path in other language
   const getLanguagePath = (langCode: string) => {
-    const pathname = location.pathname;
-
-    if (pathname === "/" && langCode === "en") return "/en";
-    if (pathname === "/en" && langCode === "lt") return "/";
-
-    const pathTranslations: Record<string, string> = {
-      "/apie": "/en/about",
-      "/paslaugos": "/en/services",
-      "/produktai": "/en/products",
-      "/kontaktai": "/en/contact",
-
-      "/en/about": "/apie",
-      "/en/services": "/paslaugos",
-      "/en/products": "/produktai",
-      "/en/contact": "/kontaktai",
+    // Handle root path
+    if (location.pathname === "/") {
+      return langCode === "en" ? "/en" : "/";
+    }
+    
+    // Handle language-specific homepages
+    if (location.pathname === "/en") {
+      return langCode === "lt" ? "/" : "/en";
+    }
+    
+    // Path translations for specific pages
+    const pathTranslations: Record<string, Record<string, string>> = {
+      // Lithuanian paths
+      "/apie": { en: "/en/about", lt: "/apie" },
+      "/paslaugos": { en: "/en/services", lt: "/paslaugos" },
+      "/produktai": { en: "/en/products", lt: "/produktai" },
+      "/pajegumai": { en: "/en/capabilities", lt: "/pajegumai" },
+      "/kontaktai": { en: "/en/contact", lt: "/kontaktai" },
+      
+      // English paths
+      "/en/about": { lt: "/apie", en: "/en/about" },
+      "/en/services": { lt: "/paslaugos", en: "/en/services" },
+      "/en/products": { lt: "/produktai", en: "/en/products" },
+      "/en/capabilities": { lt: "/pajegumai", en: "/en/capabilities" },
+      "/en/contact": { lt: "/kontaktai", en: "/en/contact" },
     };
-
-    if (pathTranslations[pathname]) return pathTranslations[pathname];
-
+    
+    // Check if we have a translation for this path
+    if (pathTranslations[location.pathname] && pathTranslations[location.pathname][langCode]) {
+      return pathTranslations[location.pathname][langCode];
+    }
+    
+    // If no specific translation found - fallback to the root of the selected language
     return langCode === "en" ? "/en" : "/";
   };
 
+  const handleLanguageChange = (langCode: string) => {
+    const newPath = getLanguagePath(langCode);
+    navigate(newPath);
+    setIsOpen(false);
+  };
+
   if (isMobileMenu) {
+    // Mobile menu version - two containers in a row
     return (
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-3">
         {languages.map((lang) => (
-          <Link
+          <button
             key={lang.code}
-            to={getLanguagePath(lang.code)}
-            className={`flex items-center justify-center h-10 w-10 rounded-full ${
-              currentLanguage.code === lang.code ? "bg-accent text-white" : "bg-muted hover:bg-accent/10"
-            } transition-colors`}
+            onClick={() => handleLanguageChange(lang.code)}
+            className={`flex items-center justify-center px-6 py-3 rounded-lg border transition-colors min-w-[80px] ${
+              currentLanguage.code === lang.code
+                ? "bg-accent text-white border-transparent font-medium"
+                : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+            }`}
           >
-            <span className="text-lg">{lang.flag}</span>
-          </Link>
+            <span className="text-sm font-medium">{lang.name}</span>
+          </button>
         ))}
       </div>
     );
   }
 
+  // Desktop version
   return (
     <div className="relative" onClick={(e) => e.stopPropagation()}>
-      <Button variant="ghost" size="sm" className="flex items-center gap-1" onClick={toggleDropdown}>
-        <span className="text-lg">{currentLanguage.flag}</span>
+      <Button
+        variant="ghost"
+        size="default"
+        className={`flex items-center gap-2 px-4 py-2 ${
+          isTransparent 
+            ? "text-white hover:bg-white/10" 
+            : "hover:bg-gray-100 dark:hover:bg-gray-800"
+        }`}
+        onClick={toggleDropdown}
+      >
+        <Globe className="h-5 w-5" />
+        <span className="text-sm font-medium">{currentLanguage.name}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </Button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 5 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full right-0 mt-1 bg-white shadow-md rounded-md py-1 min-w-[100px] z-50"
-          >
-            {languages.map((lang) => (
-              <Link
+      {isOpen && (
+        <div className="absolute top-full right-0 bg-white shadow-lg rounded-lg border border-gray-200 min-w-full z-50 overflow-hidden">
+          {languages
+            .filter(lang => lang.code !== currentLanguage.code)
+            .map((lang) => (
+              <button
                 key={lang.code}
-                to={getLanguagePath(lang.code)}
-                className={`px-3 py-2 text-sm flex items-center gap-2 hover:bg-gray-100 ${
-                  currentLanguage.code === lang.code ? "text-accent" : ""
-                }`}
-                onClick={() => setIsOpen(false)}
+                onClick={() => handleLanguageChange(lang.code)}
+                className="w-full px-4 py-2 text-sm flex items-center gap-2 transition-colors text-gray-700 hover:bg-gray-50 border-t border-gray-200"
               >
-                <span className="text-lg">{lang.flag}</span>
-                <span>{lang.name}</span>
-              </Link>
+                <span className="text-sm font-medium">{lang.name}</span>
+              </button>
             ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </div>
   );
 }

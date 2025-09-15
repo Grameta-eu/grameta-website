@@ -1,16 +1,53 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
 
-  const quickLinks = [
-    { name: 'Pagrindinis', href: '/' },
-    { name: 'Apie mus', href: '/apie' },
-    { name: 'Paslaugos', href: '/paslaugos' },
-    { name: 'Mūsų produktai', href: '/produktai' },
-    { name: 'Kontaktai', href: '/kontaktai' },
-  ];
+  // Detect current language from path
+  const getCurrentLanguage = () => {
+    if (location.pathname.startsWith('/en')) return 'en';
+    return 'lt';
+  };
+
+  const currentLang = getCurrentLanguage();
+
+  // Language-specific content
+  const content = {
+    lt: {
+      description: "Jauna ir perspektyvi įmonė, teikianti CNC frezavimo ir tekinimo paslaugas Lietuvos bei užsienio rinkoms.",
+      quickLinksTitle: "Greitos nuorodos",
+      contactTitle: "Kontaktai",
+      workingHours: "Darbo laikas:",
+      workingTime: "I–V 8:00–17:00",
+      copyright: "Visos teisės saugomos.",
+      quickLinks: [
+        { name: 'Pagrindinis', href: '/' },
+        { name: 'Apie mus', href: '/apie' },
+        { name: 'Paslaugos', href: '/paslaugos' },
+        { name: 'Mūsų produktai', href: '/produktai' },
+        { name: 'Kontaktai', href: '/kontaktai' },
+      ]
+    },
+    en: {
+      description: "A young and promising company providing CNC milling and turning services to Lithuanian and foreign markets.",
+      quickLinksTitle: "Quick Links",
+      contactTitle: "Contact",
+      workingHours: "Working hours:",
+      workingTime: "Mon–Fri 8:00–17:00",
+      copyright: "All rights reserved.",
+      quickLinks: [
+        { name: 'Home', href: '/en' },
+        { name: 'About us', href: '/en/about' },
+        { name: 'Services', href: '/en/services' },
+        { name: 'Our products', href: '/en/products' },
+        { name: 'Contact', href: '/en/contact' },
+      ]
+    }
+  };
+
+  const quickLinks = content[currentLang].quickLinks;
 
   return (
     <footer className="bg-accent text-accent-foreground">
@@ -25,14 +62,13 @@ const Footer = () => {
               <span className="font-bold text-xl">Grameta</span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs">
-              Jauna ir perspektyvi įmonė, teikianti CNC frezavimo ir tekinimo paslaugas 
-              Lietuvos bei užsienio rinkoms.
+              {content[currentLang].description}
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Greitos nuorodos</h3>
+            <h3 className="font-semibold text-lg">{content[currentLang].quickLinksTitle}</h3>
             <nav className="space-y-2">
               {quickLinks.map((link) => (
                 <Link
@@ -48,7 +84,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Kontaktai</h3>
+            <h3 className="font-semibold text-lg">{content[currentLang].contactTitle}</h3>
             <div className="space-y-3">
               <a 
                 href="mailto:cnctekinimas@gmail.com" 
@@ -66,11 +102,11 @@ const Footer = () => {
               </a>
               <div className="flex items-start space-x-3 text-sm">
                 <MapPin className="h-4 w-4 mt-0.5" />
-                <span>Gamybos g. 1<br />LT-00000, Lietuva</span>
+                <span>Vandžiogalos pl. 106G, Domeikavos k., Kaunas</span>
               </div>
               <div className="text-sm">
-                <strong>Darbo laikas:</strong><br />
-                I–V 8:00–17:00
+                <strong>{content[currentLang].workingHours}</strong><br />
+                {content[currentLang].workingTime}
               </div>
             </div>
           </div>
@@ -79,7 +115,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-accent-foreground/20 text-center">
           <p className="text-sm">
-            © {currentYear} UAB „Grameta". Visos teisės saugomos.
+            © {currentYear} UAB "Grameta". {content[currentLang].copyright}
           </p>
         </div>
       </div>

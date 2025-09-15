@@ -1,29 +1,75 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { products as allProducts, categories as allCategories } from '@/data/products';
+import SEO from '@/components/SEO';
 
 const Products = () => {
-  const [activeFilter, setActiveFilter] = useState('Visi');
+  const location = useLocation();
+  
+  // Detect current language from path
+  const getCurrentLanguage = () => {
+    if (location.pathname.startsWith('/en')) return 'en';
+    return 'lt';
+  };
+
+  const currentLang = getCurrentLanguage();
+
+  // Language-specific content
+  const content = {
+    lt: {
+      badge: "Aukštos kokybės gaminiai",
+      title: "Mūsų produktai",
+      subtitle: "Aukštos kokybės gaminiai iš skirtingų pramonės sričių. Filtruokite pagal kategoriją ir peržiūrėkite detalių pavyzdžius.",
+      noProducts: "Šioje kategorijoje produktų nėra."
+    },
+    en: {
+      badge: "High-Quality Products",
+      title: "Our products",
+      subtitle: "High-quality components from various industries. Filter by category and browse sample parts.",
+      noProducts: "There are no products in this category."
+    }
+  };
+
+  const [activeFilter, setActiveFilter] = useState(currentLang === 'en' ? 'All' : 'Visi');
 
   const categories = allCategories;
   const products = allProducts;
 
-  const filteredProducts = activeFilter === 'Visi'
+  const filteredProducts = activeFilter === 'Visi' || activeFilter === 'All'
     ? products
     : products.filter(product => product.category === activeFilter);
 
-
-  
+  // SEO content for products page
+  const seoContent = {
+    lt: {
+      title: 'Mūsų produktai - Grameta | CNC pagaminti komponentai ir detalės',
+      description: 'Peržiūrėkite UAB Grameta pagamintų CNC komponentų ir detalių pavyzdžius. Aukštos kokybės gaminiai iš skirtingų pramonės sričių.',
+      keywords: 'CNC produktai, pagaminti komponentai, metalo detalės, tikslūs gaminiai, CNC pavyzdžiai, Grameta produktai'
+    },
+    en: {
+      title: 'Our Products - Grameta | CNC Manufactured Components and Parts',
+      description: 'Browse examples of CNC components and parts manufactured by UAB Grameta. High-quality products from various industries.',
+      keywords: 'CNC products, manufactured components, metal parts, precision products, CNC examples, Grameta products'
+    }
+  };
 
   return (
-    <Layout>
+    <>
+      <SEO 
+        title={seoContent[currentLang].title}
+        description={seoContent[currentLang].description}
+        keywords={seoContent[currentLang].keywords}
+        image="/products/DSC_1031_.webp"
+      />
+      <Layout>
       <section className="section-padding">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-sm font-semibold uppercase tracking-wide text-[#016dfe] mb-3">Aukštos kokybės gaminiai</div>
-            <h1 className="text-h1 tracking-tight mb-4">Mūsų produktai</h1>
+            <div className="text-sm font-semibold uppercase tracking-wide text-[#016dfe] mb-3">{content[currentLang].badge}</div>
+            <h1 className="text-h1 tracking-tight mb-4">{content[currentLang].title}</h1>
             <p className="text-body text-text-secondary max-w-[720px] mx-auto">
-              Aukštos kokybės gaminiai iš skirtingų pramonės sričių. Filtruokite pagal kategoriją ir peržiūrėkite detalių pavyzdžius.
+              {content[currentLang].subtitle}
             </p>
           </div>
 
@@ -58,14 +104,15 @@ const Products = () => {
           {filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <p className="text-body text-text-secondary">
-                Šioje kategorijoje produktų nėra.
+                {content[currentLang].noProducts}
               </p>
             </div>
           )}
         </div>
       </section>
 
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

@@ -21,14 +21,37 @@ const Header = ({ overlay = false }: HeaderProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigation = [
-    { name: 'Pagrindinis', href: '/' },
-    { name: 'Apie mus', href: '/apie' },
-    { name: 'Paslaugos', href: '/paslaugos' },
-    { name: 'Mūsų produktai', href: '/produktai' },
-    { name: 'Pajėgumai', href: '/pajegumai' },
-    { name: 'Kontaktai', href: '/kontaktai' },
-  ];
+  // Detect current language from path
+  const getCurrentLanguage = () => {
+    if (location.pathname.startsWith('/en')) return 'en';
+    return 'lt';
+  };
+
+  const currentLang = getCurrentLanguage();
+
+  // Language-specific navigation
+  const getNavigation = () => {
+    if (currentLang === 'en') {
+      return [
+        { name: 'Home', href: '/en' },
+        { name: 'About us', href: '/en/about' },
+        { name: 'Services', href: '/en/services' },
+        { name: 'Our products', href: '/en/products' },
+        { name: 'Capabilities', href: '/en/capabilities' },
+        { name: 'Contact', href: '/en/contact' },
+      ];
+    }
+    return [
+      { name: 'Pagrindinis', href: '/' },
+      { name: 'Apie mus', href: '/apie' },
+      { name: 'Paslaugos', href: '/paslaugos' },
+      { name: 'Mūsų produktai', href: '/produktai' },
+      { name: 'Pajėgumai', href: '/pajegumai' },
+      { name: 'Kontaktai', href: '/kontaktai' },
+    ];
+  };
+
+  const navigation = getNavigation();
 
   const isActive = (href: string) => {
     return location.pathname === href;

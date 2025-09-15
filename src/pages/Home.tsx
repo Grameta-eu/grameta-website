@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,6 +7,7 @@ import Layout from '@/components/layout/Layout';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel';
 import { products } from '@/data/products';
 import { NumberTicker } from '@/components/magicui/number-ticker';
+import SEO from '@/components/SEO';
 
 // Import images
 import heroImage from '@/assets/cnc-hero-image.jpg';
@@ -14,8 +15,137 @@ import partsCollection from '@/assets/cnc-parts-collection.jpg';
 import cncLatheImage from '@/assets/cnc-lathe-operation.jpg';
 
 const Home = () => {
+  const location = useLocation();
+  
+  // Detect current language from path
+  const getCurrentLanguage = () => {
+    if (location.pathname.startsWith('/en')) return 'en';
+    return 'lt';
+  };
+
+  const currentLang = getCurrentLanguage();
+
+  // Language-specific content
+  const content = {
+    lt: {
+      heroTitle: "Metalo apdirbimas CNC tekinimo ir frezavimo staklėmis",
+      heroSubtitle: "Gaminame aukšto tikslumo detales mažoms ir vidutinėms serijoms. Dirbame su plienu, nerūdijančiu plienu, aliuminiu, bronza ir plastiku.",
+      heroButton1: "Gauti pasiūlymą",
+      heroButton2: "Peržiūrėti mūsų darbus",
+      industriesTitle: "Pagrindinės gamybos sritys",
+      industriesSubtitle: "Turimi įrengimai leidžia greitai ir lanksčiai įvykdyti mažų bei vidutinių serijų užsakymus",
+      industries: {
+        machinery: {
+          title: "Mašinų pramonė",
+          description: "Tikslūs komponentai ir mazgai mechaninėms sistemoms."
+        },
+        medical: {
+          title: "Medicina",
+          description: "Smulkios tolerancijos, švarūs paviršiai, dokumentacija."
+        },
+        construction: {
+          title: "Statybos pramonė",
+          description: "Tvirti elementai įrangai ir tvirtinimams."
+        },
+        electronics: {
+          title: "Elektronika",
+          description: "Korpuso detalės, laikikliai, tarpikliai, prototipai."
+        }
+      },
+      capabilitiesTitle: "Mūsų galimybės",
+      capabilities: [
+        'CNC frezavimas 3 ašių staklėmis',
+        'CNC tekinimas mažoms ir vidutinėms serijoms',
+        'Medžiagos: anglinis/legiruotas/nerūdijantis plienas, aliuminis, bronza, plastikai',
+        'Brėžinių priėmimas: STEP, DXF, DWG, PDF',
+        'Kokybės kontrolė ir matavimai pagal poreikį'
+      ],
+      portfolioTitle: "Mūsų pagaminti produktai",
+      portfolioSubtitle: "Pamatykite keletą mūsų pagamintų produktų.",
+      portfolioButton: "Peržiūrėti visus produktus",
+      aboutTitle: "Trumpai apie mus",
+      aboutText1: "UAB \"Grameta\" — jauna ir perspektyvi įmonė, teikianti CNC frezavimo ir tekinimo paslaugas Lietuvos bei užsienio rinkoms.",
+      aboutText2: "Lanksčiai įvykdome mažų ir vidutinių serijų užsakymus, užtikrindami tikslumą ir terminus.",
+      aboutFeatures: [
+        'CNC frezavimas ir tekinimas',
+        '±0.01 mm tikslumas',
+        'Greita gamyba',
+        'Nerūdijančio plieno apdirbimas',
+      ],
+      aboutButton: "Plačiau apie mus"
+    },
+    en: {
+      heroTitle: "Metalworking with CNC Turning and Milling Machines",
+      heroSubtitle: "We produce high-precision parts for small and medium series. We work with steel, stainless steel, aluminum, bronze, and plastic.",
+      heroButton1: "Get a quote",
+      heroButton2: "View our work",
+      industriesTitle: "Main production areas",
+      industriesSubtitle: "Our equipment allows us to quickly and flexibly fulfill small and medium series orders",
+      industries: {
+        machinery: {
+          title: "Machinery industry",
+          description: "Precision components and assemblies for mechanical systems."
+        },
+        medical: {
+          title: "Medicine",
+          description: "Tight tolerances, clean surfaces, full documentation."
+        },
+        construction: {
+          title: "Construction industry",
+          description: "Durable elements for equipment and fastenings."
+        },
+        electronics: {
+          title: "Electronics",
+          description: "Housing parts, brackets, spacers, prototypes."
+        }
+      },
+      capabilitiesTitle: "Our capabilities",
+      capabilities: [
+        'CNC milling with 3-axis machines',
+        'CNC turning for small and medium series',
+        'Materials: carbon/alloy/stainless steel, aluminum, bronze, plastics',
+        'Drawing formats accepted: STEP, DXF, DWG, PDF',
+        'Quality control and measurements upon request'
+      ],
+      portfolioTitle: "Our manufactured products",
+      portfolioSubtitle: "Take a look at some of the products we’ve made.",
+      portfolioButton: "View all products",
+      aboutTitle: "About Us",
+      aboutText1: "UAB \"Grameta\" is a young and ambitious company providing CNC milling and turning services to both Lithuanian and international markets.",
+      aboutText2: "We flexibly handle small and medium series orders, ensuring precision and on-time delivery.",
+      aboutFeatures: [
+        'CNC Milling and Turning',
+        '±0.01 mm accuracy',
+        'Fast production',
+        'Stainless steel machining',
+      ],
+      aboutButton: "Learn more about us"
+    }
+  };
+
+  // SEO content for home page
+  const seoContent = {
+    lt: {
+      title: 'Grameta - CNC frezavimas ir tekinimas | Tikslūs metalų apdirbimo sprendimai',
+      description: 'UAB Grameta - CNC frezavimo ir tekinimo paslaugos Lietuvoje. Tikslūs metalų apdirbimo sprendimai mažoms ir vidutinėms serijoms. Dirbame su plienu, aliuminiu, bronza ir plastiku.',
+      keywords: 'CNC frezavimas, CNC tekinimas, metalo apdirbimas, tikslūs komponentai, prototipai, gamyba, plienas, aliuminis, bronza, plastikas, Lietuva, Grameta'
+    },
+    en: {
+      title: 'Grameta - CNC Milling and Turning | Precision Metal Machining Solutions',
+      description: 'UAB Grameta - CNC milling and turning services in Lithuania. Precision metal machining solutions for small and medium series. We work with steel, aluminum, bronze and plastics.',
+      keywords: 'CNC milling, CNC turning, metal machining, precision components, prototypes, manufacturing, steel, aluminum, bronze, plastics, Lithuania, Grameta'
+    }
+  };
+
   return (
-    <Layout overlayHeader>
+    <>
+      <SEO 
+        title={seoContent[currentLang].title}
+        description={seoContent[currentLang].description}
+        keywords={seoContent[currentLang].keywords}
+        image="/cnc-hero-image.jpg"
+      />
+      <Layout overlayHeader>
       {/* Hero Section - full viewport height with internal offset for fixed header */}
       <section className="relative min-h-[112svh] md:h-[100svh] overflow-visible md:overflow-hidden flex flex-col pt-[4.5rem] md:pt-[6.75rem] pb-12 md:pb-6 bg-white">
         {/* Copy */}
@@ -26,7 +156,7 @@ const Home = () => {
               <div className="hidden lg:flex justify-center">
                 <img src="/grameta.webp" alt="Grameta" className="h-44 xl:h-52 2xl:h-60 w-auto" />
               </div>
-              <h1 className="text-h1 text-[clamp(1.8rem,6.5vw,2.6rem)] md:text-[clamp(2.5rem,6vw,4rem)] leading-[1.1]">Metalo apdirbimas CNC tekinimo ir frezavimo staklėmis</h1>
+              <h1 className="text-h1 text-[clamp(1.8rem,6.5vw,2.6rem)] md:text-[clamp(2.5rem,6vw,4rem)] leading-[1.1]">{content[currentLang].heroTitle}</h1>
               {/* Mobile image between heading and subheading */}
               <div className="block md:hidden w-full px-4">
                 <div className="image-gallery rounded-xl overflow-hidden shadow-xl max-w-5xl mx-auto h-40">
@@ -38,16 +168,15 @@ const Home = () => {
                 </div>
               </div>
               <p className="text-body text-text-primary max-w-3xl mx-auto px-4 md:px-0">
-                Gaminame aukšto tikslumo detales mažoms ir vidutinėms serijoms. Dirbame
-                su plienu, nerūdijančiu plienu, aliuminiu, bronza ir plastiku.
+                {content[currentLang].heroSubtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4 md:px-0">
                 <Button asChild className="bg-accent/100 backdrop-blur-sm border border-accent/20 text-white hover:bg-accent hover:text-white h-12 md:h-14 px-6 md:px-8 text-base md:text-lg rounded-lg">
-                  <Link to="/kontaktai">Gauti pasiūlymą</Link>
+                  <Link to={currentLang === 'en' ? "/en/contact" : "/kontaktai"}>{content[currentLang].heroButton1}</Link>
                 </Button>
                 <Button asChild className="bg-white text-accent border border-accent/20 hover:bg-white/90 hover:text-accent h-12 md:h-14 px-6 md:px-8 text-base md:text-lg rounded-lg">
-                  <Link to="/produktai">
-                    Peržiūrėti mūsų darbus
+                  <Link to={currentLang === 'en' ? "/en/products" : "/produktai"}>
+                    {content[currentLang].heroButton2}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
@@ -74,9 +203,9 @@ const Home = () => {
       <section className="section-padding">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:flex md:items-baseline md:justify-between mb-10 md:mb-12 gap-6 md:gap-8">
-            <h3 className="text-h2 !font-medium m-0">Pagrindinės gamybos sritys</h3>
+            <h3 className="text-h2 !font-medium m-0">{content[currentLang].industriesTitle}</h3>
             <p className="text-body text-text-secondary md:text-right md:w-[40%] lg:w-[40%] m-0">
-            Turimi įrengimai leidžia greitai ir lanksčiai įvykdyti mažų bei vidutinių serijų užsakymus
+            {content[currentLang].industriesSubtitle}
             </p>
           </div>
 
@@ -86,9 +215,9 @@ const Home = () => {
                 <div className="icon-accent mx-auto w-fit">
                   <Settings className="h-6 w-6" />
                 </div>
-                <h4 className="text-h3 font-semibold">Mašinų pramonė</h4>
+                <h4 className="text-h3 font-semibold">{content[currentLang].industries.machinery.title}</h4>
                 <p className="text-body text-text-secondary">
-                  Tikslūs komponentai ir mazgai mechaninėms sistemoms.
+                  {content[currentLang].industries.machinery.description}
                 </p>
               </CardContent>
             </Card>
@@ -98,9 +227,9 @@ const Home = () => {
                 <div className="icon-accent mx-auto w-fit">
                   <Heart className="h-6 w-6" />
                 </div>
-                <h4 className="text-h3 font-semibold">Medicina</h4>
+                <h4 className="text-h3 font-semibold">{content[currentLang].industries.medical.title}</h4>
                 <p className="text-body text-text-secondary">
-                  Smulkios tolerancijos, švarūs paviršiai, dokumentacija.
+                  {content[currentLang].industries.medical.description}
                 </p>
               </CardContent>
             </Card>
@@ -110,9 +239,9 @@ const Home = () => {
                 <div className="icon-accent mx-auto w-fit">
                   <Building className="h-6 w-6" />
                 </div>
-                <h4 className="text-h3 font-semibold">Statybos pramonė</h4>
+                <h4 className="text-h3 font-semibold">{content[currentLang].industries.construction.title}</h4>
                 <p className="text-body text-text-secondary">
-                  Tvirti elementai įrangai ir tvirtinimams.
+                  {content[currentLang].industries.construction.description}
                 </p>
               </CardContent>
             </Card>
@@ -122,9 +251,9 @@ const Home = () => {
                 <div className="icon-accent mx-auto w-fit">
                   <Cpu className="h-6 w-6" />
                 </div>
-                <h4 className="text-h3 font-semibold">Elektronika</h4>
+                <h4 className="text-h3 font-semibold">{content[currentLang].industries.electronics.title}</h4>
                 <p className="text-body text-text-secondary">
-                  Korpuso detalės, laikikliai, tarpikliai, prototipai.
+                  {content[currentLang].industries.electronics.description}
                 </p>
               </CardContent>
             </Card>
@@ -139,15 +268,9 @@ const Home = () => {
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h2 className="text-h2">Mūsų galimybės</h2>
+              <h2 className="text-h2">{content[currentLang].capabilitiesTitle}</h2>
               <div className="space-y-4">
-                {[
-                  'CNC frezavimas 3 ašių staklėmis',
-                  'CNC tekinimas mažoms ir vidutinėms serijoms',
-                  'Medžiagos: anglinis/legiruotas/nerūdijantis plienas, aliuminis, bronza, plastikai',
-                  'Brėžinių priėmimas: STEP, DXF, DWG, PDF',
-                  'Kokybės kontrolė ir matavimai pagal poreikį'
-                ].map((capability, index) => (
+                {content[currentLang].capabilities.map((capability, index) => (
                   <div key={index} className="flex items-start space-x-3">
                     <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-body">{capability}</span>
@@ -170,9 +293,9 @@ const Home = () => {
       <section className="section-padding bg-white">
           <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="text-h2 mb-4 text-black">Mūsų pagaminti produktai</h2>
+            <h2 className="text-h2 mb-4 text-black">{content[currentLang].portfolioTitle}</h2>
             <p className="text-body text-text-secondary">
-              Pamatykite keletą mūsų pagamintų produktų.
+              {content[currentLang].portfolioSubtitle}
             </p>
           </div>
 
@@ -248,8 +371,8 @@ const Home = () => {
 
           <div className="text-center">
             <Button asChild className="bg-accent text-white hover:bg-accent/90 h-12 md:h-14 px-6 md:px-8 text-base md:text-lg rounded-lg">
-              <Link to="/produktai">
-                Peržiūrėti visus produktus
+              <Link to={currentLang === 'en' ? "/en/products" : "/produktai"}>
+                {content[currentLang].portfolioButton}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -275,23 +398,18 @@ const Home = () => {
               {/* Copy - 6/12 */}
               <div className="md:col-span-6 order-2 flex flex-col justify-center">
                 <div className="space-y-5">
-                  <h2 className="font-bold leading-tight text-[clamp(28px,3vw,40px)] tracking-[-0.01em]">Trumpai apie mus</h2>
+                  <h2 className="font-bold leading-tight text-[clamp(28px,3vw,40px)] tracking-[-0.01em]">{content[currentLang].aboutTitle}</h2>
                   <div className="space-y-4">
                     <p className="text-[clamp(16px,1.5vw,18px)] leading-[1.65] text-[#4A4A4A] max-w-[65ch]">
-                      UAB „Grameta" — jauna ir perspektyvi įmonė, teikianti CNC frezavimo ir tekinimo paslaugas Lietuvos bei užsienio rinkoms.
+                      {content[currentLang].aboutText1}
                     </p>
                     <p className="text-[clamp(16px,1.5vw,18px)] leading-[1.65] text-[#4A4A4A] max-w-[65ch]">
-                      Lanksčiai įvykdome mažų ir vidutinių serijų užsakymus, užtikrindami tikslumą ir terminus.
+                      {content[currentLang].aboutText2}
                     </p>
                   </div>
                   {/* Strengths 2x2 */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 max-w-[52ch]">
-                    {[
-                      'CNC frezavimas ir tekinimas',
-                      '±0.01 mm tikslumas',
-                      'Greita gamyba',
-                      'Nerūdijančio plieno apdirbimas',
-                    ].map((item, idx) => (
+                    {content[currentLang].aboutFeatures.map((item, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-[15px] text-[#243B53]">
                         <CheckCircle className="h-4 w-4 text-[#016DFE]" />
                         <span>{item}</span>
@@ -301,8 +419,8 @@ const Home = () => {
                   {/* CTAs */}
                   <div className="flex items-center gap-5 pt-2">
                     <Button asChild className="h-12 px-6 bg-accent text-white hover:bg-accent/90 shadow-sm hover:shadow-md">
-                      <Link to="/apie">
-                        Plačiau apie mus
+                      <Link to={currentLang === 'en' ? "/en/about" : "/apie"}>
+                        {content[currentLang].aboutButton}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
@@ -315,7 +433,8 @@ const Home = () => {
       </section>
 
       
-    </Layout>
+      </Layout>
+    </>
   );
 };
 
