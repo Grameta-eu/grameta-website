@@ -66,7 +66,7 @@ const Header = ({ overlay = false }: HeaderProps) => {
       <div className="container-custom">
         <div className="relative flex items-center justify-between lg:justify-end h-[5.0625rem] md:h-[6.75rem]">
           {/* Logo */}
-          <Link to="/" className="flex items-center lg:hidden">
+          <Link to={currentLang === 'en' ? '/en' : '/'} className="flex items-center lg:hidden">
             <img
               src="/grameta.webp"
               alt="Grameta"
