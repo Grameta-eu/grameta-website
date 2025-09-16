@@ -27,7 +27,7 @@ const SEO = ({
   };
 
   const currentLang = getCurrentLanguage();
-  const baseUrl = 'https://grameta.lt'; // Replace with your actual domain
+  const baseUrl = 'https://grameta.eu';
   const currentUrl = `${baseUrl}${location.pathname}`;
 
   // Default SEO content for each language
