@@ -22,6 +22,8 @@ export default defineConfig(() => ({
         manualChunks: undefined,
       },
     },
+    // Ensure static assets from public/ are copied to dist/
+    copyPublicDir: true,
   },
   preview: {
     // Handle SPA routing for local preview
