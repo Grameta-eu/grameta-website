@@ -5,6 +5,7 @@
     <loc>https://grameta.eu/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -13,6 +14,7 @@
     <loc>https://grameta.eu/apie</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/about" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/apie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/apie" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -21,6 +23,7 @@
     <loc>https://grameta.eu/paslaugos</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/services" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/paslaugos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/paslaugos" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -29,6 +32,7 @@
     <loc>https://grameta.eu/produktai</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/products" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/produktai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/produktai" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -37,6 +41,7 @@
     <loc>https://grameta.eu/pajegumai</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/capabilities" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/pajegumai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/pajegumai" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -45,6 +50,7 @@
     <loc>https://grameta.eu/kontaktai</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/contact" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/kontaktai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/kontaktai" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -54,6 +60,7 @@
     <loc>https://grameta.eu/en</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -62,6 +69,7 @@
     <loc>https://grameta.eu/en/about</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/about" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/apie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/apie" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -70,6 +78,7 @@
     <loc>https://grameta.eu/en/services</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/services" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/paslaugos" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/paslaugos" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -78,6 +87,7 @@
     <loc>https://grameta.eu/en/products</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/products" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/produktai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/produktai" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -86,6 +96,7 @@
     <loc>https://grameta.eu/en/capabilities</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/capabilities" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/pajegumai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/pajegumai" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -94,6 +105,7 @@
     <loc>https://grameta.eu/en/contact</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://grameta.eu/en/contact" />
     <xhtml:link rel="alternate" hreflang="lt" href="https://grameta.eu/kontaktai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://grameta.eu/kontaktai" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -71,9 +71,10 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/favicon/(.*)", "destination": "/favicon/$1" },
+    { "source": "/(.*)\\.(webp|jpg|jpeg|png|gif|svg|ico|txt|xml)", "destination": "/$1.$2" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
